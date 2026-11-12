@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Universo de las Estrellas</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a18;--card:#12162e;--accent:#7c6cff;--accent2:#38d1ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:#e9efff;font-family:'Outfit',sans-serif;scroll-behavior:smooth;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:rgba(7,10,24,0.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.logo{font-family:'Space Grotesk';font-weight:700;font-size:1.3rem}.logo span{color:var(--accent2)}
+.menu{display:flex;gap:28px;transition:0.3s}.menu a{opacity:0.7;transition:0.3s;font-size:0.95rem}.menu a:hover{opacity:1;color:var(--accent2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;z-index:101}
+.hamburger span{width:26px;height:3px;background:white;border-radius:10px;transition:0.3s;display:block}
+.hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 6% 60px;background: radial-gradient(80% 60% at 50% 0%, rgba(124,108,255,0.25), transparent), url('https://images.unsplash.com/photo-1534447678524-3309891d3751?q=80&w=2000') center/cover;position:relative}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(7,10,24,0.3), var(--bg) 90%);z-index:1}
+.hero-content{position:relative;z-index:2;max-width:700px;display:flex;flex-direction:column}
+.hero h1{font-family:'Space Grotesk';font-size:clamp(3rem,7vw,5.5rem);line-height:0.9;margin-bottom:20px}
+.hero p{font-size:1.2rem;opacity:0.8;line-height:1.6;margin-bottom:20px}
+.btn{display:inline-block;padding:14px 32px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;font-weight:700;transition:0.3s;border:none;cursor:pointer;width:fit-content}
+section{min-height:100vh;padding:90px 6% 70px;position:relative;display:flex;flex-direction:column;justify-content:center}
+.section-title{font-family:'Space Grotesk';font-size:4.2rem;margin-bottom:10px;line-height:0.95}
+.section-sub{opacity:0.6;margin-bottom:20px;font-size:1.1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(285px,1fr));gap:20px;align-items:start}
+.card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:26px;transition:0.4s;cursor:pointer;align-self:start;min-height:175px}
+.card:hover{transform:translateY(-6px);border-color:var(--accent2);box-shadow:0 12px 30px rgba(124,108,255,0.2)}
+.card h3{color:var(--accent2);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;font-size:1.15rem}
+.card h3::after{content:'+';font-size:1.4rem;transition:0.3s}
+.card p{font-size:0.98rem;line-height:1.65;opacity:0.9}
+.card.active{border-color:var(--accent2);background:#1a2050}
+.card.active h3::after{transform:rotate(45deg)}
+.card-extra{max-height:0;overflow:hidden;opacity:0;transition:0.4s}
+.card.active .card-extra{max-height:450px;opacity:1;margin-top:14px}
+.card-extra p{font-size:0.92rem;line-height:1.65;color:#b8c0ff;border-top:1px solid rgba(255,255,255,0.08);padding-top:12px}
+.types-img{width:100%;border-radius:18px;margin:0 0 24px;object-fit:cover;max-height:450px;border:1px solid rgba(255,255,255,0.1)}
+.curio-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.curio{background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-radius:16px;padding:20px;border-left:4px solid var(--accent);line-height:1.5;font-size:0.95rem}
+.curio strong{color:var(--accent2)}
+.faq{margin-top:35px}.faq h3{font-size:1.5rem;margin-bottom:18px}
+.faq details{background:var(--card);padding:18px 22px;border-radius:12px;margin-bottom:12px;cursor:pointer;border:1px solid rgba(255,255,255,0.06)}
+.faq summary{font-weight:600;font-size:1.05rem}
+.faq p{margin-top:12px;opacity:0.8;line-height:1.6;font-size:0.95rem}
+.contact-wrap{display:grid;grid-template-columns:1.2fr 0.8fr;gap:30px;align-items:start}
+form{background:var(--card);padding:28px;border-radius:20px;border:1px solid rgba(255,255,255,0.08)}
+form input, form textarea{width:100%;padding:12px 14px;margin-bottom:14px;border-radius:10px;background:#0a0e22;border:1px solid rgba(255,255,255,0.12);color:white;font-family:inherit}
+.contact-img{width:70%;max-width:320px;border-radius:16px;margin:15px auto 0;display:block;border:1px solid rgba(255,255,255,0.1)}
+.contact-info{text-align:center}
+.contact-info p{text-align:left}
+.thanks{display:none;margin-top:15px;padding:14px;background:rgba(56,209,255,0.15);border-radius:12px;border:1px solid var(--accent2);text-align:center;font-size:0.9rem}
+.contact-actions{display:flex;justify-content:center;margin-top:24px;width:100%}
+.page-num{position:absolute;bottom:20px;right:6%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);padding:5px 12px;border-radius:100px;font-size:0.75rem;z-index:3;opacity:0.9}
+footer{text-align:center;padding:18px;opacity:0.4;font-size:0.85rem;border-top:1px solid rgba(255,255,255,0.08)}
+@media(max-width:900px){
+.hamburger{display:flex}
+.menu{position:absolute;top:70px;right:6%;width:200px;background:#141a3a;flex-direction:column;gap:0;border-radius:16px;border:1px solid rgba(255,255,255,0.12);overflow:hidden;opacity:0;transform:translateY(-10px) scale(0.95);pointer-events:none;transition:0.3s}
+.menu.active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.menu a{font-size:1rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.06);width:100%;opacity:1}
+.contact-wrap{grid-template-columns:1fr}
+.contact-img{width:85%;max-width:300px}
+.section-title{font-size:2.8rem}
+.types-img{max-height:350px}
+.card{min-height:auto;padding:22px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">EL UNIVERSO <span>DE LAS ESTRELLAS</span></div>
+  <div class="menu" id="menu"><a href="#inicio" onclick="closeMenu()">Inicio</a><a href="#estrellas" onclick="closeMenu()">Estrellas</a><a href="#curiosidades" onclick="closeMenu()">Curiosidades</a><a href="#contacto" onclick="closeMenu()">Contacto</a></div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hero-content"><h1>El Universo de las Estrellas</h1><p>Bienvenido a un viaje por el universo, donde descubrirás los secretos de las estrellas y su importancia en el espacio.</p><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800" style="width:100%;border-radius:20px;margin:10px 0 25px;border:1px solid rgba(255,255,255,0.15);"><a href="#estrellas" class="btn">Explora el universo</a></div>
+  <div class="page-num">PÁGINA 1 / 4</div>
+</section>
+
+<section id="estrellas">
+  <div><h2 class="section-title">Las Estrellas</h2><p class="section-sub">¡Haz clic en cada recuadro! Solo se abre el que selecciones.</p><img class="types-img" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1200">
+    <div class="grid">
+      <div class="card" onclick="toggleCard(this)"><h3>¿Qué son las estrellas?</h3><p>Son enormes esferas de plasma que emiten luz y energía propia. Están compuestas principalmente de hidrógeno y helio, y su gravedad las mantiene unidas. Son la base de las galaxias y sin ellas no existirían los planetas ni la vida.</p><div class="card-extra"><p>💡 Dato extra: ¡Hay más estrellas que granos de arena en la Tierra! Se estima que hay unas 10²⁴ estrellas en el universo observable. En su interior alcanzan millones de grados y crean los elementos químicos que forman todo lo que conocemos.</p></div></div>
+      <div class="card" onclick="toggleCard(this)"><h3>¿Cómo se forman?</h3><p>Nacen en nebulosas, enormes nubes de gas y polvo interestelar. La gravedad comprime el material durante millones de años hasta que el núcleo se calienta a millones de grados y se enciende la fusión nuclear, naciendo así una nueva estrella.</p><div class="card-extra"><p>🌌 Las nebulosas más famosas son la del Águila con sus Pilares de la Creación y la de Orión, que se puede ver a simple vista. Cuando la estrella se enciende, los vientos estelares despejan el polvo a su alrededor y empieza a brillar por sí misma.</p></div></div>
+      <div class="card" onclick="toggleCard(this)"><h3>Tipos de estrellas</h3><p>Existen Enanas Rojas que viven billones de años y son las más comunes, Estrellas Amarillas como nuestro Sol que viven 10 mil millones de años, Gigantes Azules muy calientes y Supergigantes Rojas cientos de veces más grandes que el Sol.</p><div class="card-extra"><p>🔵 Según su color sabemos su temperatura y edad: Azules = 30,000°C y viven pocos millones de años, Amarillas = 5,500°C como el Sol, Rojas = 3,000°C pero son las más longevas. El tamaño y color revelan su destino final.</p></div></div>
+      <div class="card" onclick="toggleCard(this)"><h3>¿Por qué brillan?</h3><p>Brillan por la fusión nuclear en su núcleo, donde el hidrógeno se convierte en helio liberando una enorme cantidad de energía. Esa energía en forma de luz y calor viaja por el espacio durante años hasta llegar a nosotros.</p><div class="card-extra"><p>⚡ En el Sol cada segundo 600 millones de toneladas de hidrógeno se convierten en helio. Esa energía tarda miles de años en salir desde el centro a la superficie y luego solo 8 minutos y 20 segundos en llegar a la Tierra para iluminarnos y darnos calor.</p></div></div>
+      <div class="card" onclick="toggleCard(this)"><h3>¿Cuánto tiempo viven?</h3><p>Depende totalmente de su masa. El Sol vivirá unos 10,000 millones de años y va a la mitad de su vida. Las estrellas más masivas viven solo unos millones de años porque queman su combustible muy rápido, mientras las enanas rojas pueden vivir billones de años.</p><div class="card-extra"><p>⏳ El Sol tiene 4,600 millones de años. Al final de su vida se inflará como gigante roja tragándose a Mercurio y Venus, y luego se encogerá a enana blanca del tamaño de la Tierra. Las más masivas terminan explotando como supernovas muy brillantes.</p></div></div>
+      <div class="card" onclick="toggleCard(this)"><h3>Ejemplos conocidos</h3><p><strong>El Sol:</strong> Nuestra estrella más cercana, fuente de vida y energía.<br><strong>Sirio:</strong> La más brillante del cielo nocturno, en realidad es un sistema binario de dos estrellas que giran entre sí.</p><div class="card-extra"><p>⭐ Sirio está a 8.6 años luz y fue clave para los egipcios para crear su calendario. Otras famosas son Polaris que marca el norte, Betelgeuse una supergigante roja que podría explotar como supernova en cualquier momento, y Próxima Centauri la más cercana al Sol.</p></div></div>
+    </div>
+  </div>
+  <div class="page-num">PÁGINA 2 / 4</div>
+</section>
+
+<section id="curiosidades" style="background:#0b0e24">
+  <div><h2 class="section-title">Curiosidades del universo</h2><p class="section-sub">Datos interesantes para aprender de forma entretenida.</p><img class="types-img" src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=1200">
+    <div class="curio-list">
+      <div class="curio"><strong>El Sol también es una estrella.</strong> Es una estrella enana y amarilla que nos da luz y calor. Está a solo 8 minutos luz.</div>
+      <div class="curio"><strong>Algunas estrellas son mucho más grandes que el Sol.</strong> Betelgeuse es tan grande que si estuviera en lugar del Sol, llegaría hasta Júpiter.</div>
+      <div class="curio"><strong>El color indica la temperatura.</strong> Azules = 30,000°C, amarillas = 5,500°C, rojas = 3,000°C.</div>
+      <div class="curio"><strong>¿Qué sucede cuando muere una estrella?</strong> Se vuelve gigante roja y luego enana blanca. Las masivas explotan como supernovas y forman agujeros negros.</div>
+      <div class="curio"><strong>Estrellas, planetas y satélites:</strong> Estrella brilla sola, planeta gira alrededor de estrella, satélite gira alrededor de planeta.</div>
+    </div>
+    <div class="faq">
+      <h3>Preguntas frecuentes</h3>
+      <details><summary>¿Cuántas estrellas hay en el universo?</summary><p>Se estima que hay alrededor de 200 mil trillones de estrellas, más que granos de arena en todas las playas de la Tierra juntas. Solo en nuestra galaxia, la Vía Láctea, hay entre 100,000 y 400,000 millones de estrellas. Y existen billones de galaxias más en el universo observable.</p></details>
+      <details><summary>¿Por qué vemos el pasado cuando miramos estrellas?</summary><p>Sí, porque la luz tarda en viajar. La luz de Sirio, la estrella más brillante, tardó 8.6 años en llegar a la Tierra, así que la vemos como era hace 8.6 años. Si una estrella que está a 1,000 años luz explota hoy, nosotros la veríamos explotar dentro de 1,000 años.</p></details>
+      <details><summary>¿Por qué las estrellas titilan?</summary><p>Las estrellas titilan por culpa de la atmósfera de la Tierra. El aire caliente y frío se mueve constantemente y desvía un poco la luz de las estrellas, haciendo que parezca que parpadean. En el espacio los astronautas ven las estrellas fijas, sin titilar.</p></details>
+    </div>
+  </div>
+  <div class="page-num">PÁGINA 3 / 4</div>
+</section>
+
+<section id="contacto">
+  <div><h2 class="section-title">Contacto</h2><p class="section-sub">Envía preguntas o comentarios sobre el sitio.</p>
+    <div class="contact-wrap"><form id="form"><h3 style="margin-bottom:15px">Proyecto: El Universo de las Estrellas</h3><input type="text" placeholder="Tu nombre" required><input type="email" placeholder="Tu correo" required><textarea rows="4" placeholder="Tu mensaje..." required></textarea><button type="submit" class="btn" style="width:100%">Enviar consulta</button><div class="thanks" id="thanks">Gracias por visitar nuestro sitio. ¡Sigue explorando el universo!</div></form>
+    <div class="contact-info"><p><strong>Correo ficticio:</strong><br>contacto@eluniversodelasestrellas.com</p><br><p>Proyecto para divulgar la astronomía de forma accesible y visual.</p><img class="contact-img" src="https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=600">
+      <div class="contact-actions"><a href="#inicio" class="btn">🚀 Volver al inicio</a></div>
+    </div></div>
+  </div>
+  <div class="page-num">PÁGINA 4 / 4</div>
+</section>
+
+<footer>El Universo de las Estrellas © 2026</footer>
+<script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('active');document.getElementById('hamburger').classList.toggle('active');}
+function closeMenu(){document.getElementById('menu').classList.remove('active');document.getElementById('hamburger').classList.remove('active');}
+function toggleCard(c){const all=document.querySelectorAll('.grid .card');const act=c.classList.contains('active');all.forEach(x=>x.classList.remove('active'));if(!act){c.classList.add('active');}}
+document.getElementById('form').addEventListener('submit',function(e){e.preventDefault();document.getElementById('thanks').style.display='block';this.reset();setTimeout(()=>{document.getElementById('thanks').style.display='none'},4000);});
+</script>
+</body>
+</html>
